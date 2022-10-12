@@ -5,7 +5,8 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    fontFamily: { sans: ["Helvetica Neue"] },
+    extend: { colors: { primary: "#BA2329", secondary: "#007ddb" } },
   },
   plugins: [],
 };

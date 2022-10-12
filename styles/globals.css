@@ -3,32 +3,105 @@
 @tailwind utilities;
 
 html,
-body {
+body,
+* {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  box-sizing: border-box;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
-
 .primary_button {
-  @apply px-8 py-2 my-4 text-white uppercase transition-all duration-300 bg-red-700 border rounded-lg hover:border-red-700 hover:bg-white hover:text-red-700;
+  @apply px-8 py-2 my-4 text-white uppercase transition-all duration-300 border rounded-lg bg-primary hover:border-primary hover:bg-white hover:text-primary;
+}
+
+.secondary_button {
+  @apply px-8 py-2 text-white uppercase transition-all duration-300 border rounded-lg bg-primary hover:border-primary hover:bg-white hover:text-primary;
+}
+
+.find_button {
+  @apply px-8 py-2 text-white uppercase transition-all duration-300 border rounded-r-lg bg-primary hover:border-primary hover:bg-white hover:text-primary;
+}
+
+.isSelected {
+  @apply duration-200 ease-in-out opacity-100;
+}
+
+.hashtag {
+  @apply w-24 p-2 mr-1 text-xs text-center text-white bg-secondary rounded-3xl;
+}
+
+.headliner {
+  @apply mb-4 text-xl font-medium text-primary;
+}
+.headliner2 {
+  @apply mb-4 text-2xl font-medium text-primary;
+}
+
+.blink-1 {
+  -webkit-animation: blink-1 3s 7s infinite both;
+  animation: blink-1 3s 7s infinite both;
+}
+
+@-webkit-keyframes blink-1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.75;
+  }
+}
+@keyframes blink-1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.75;
+  }
+}
+
+.page-enter-active,
+.page-enter {
+  animation: moveFromBottom 0.5s ease both;
+}
+.page-leave-active,
+.page-leave-to {
+  animation: moveToTop 0.4s ease both;
+}
+
+/* @-webkit-keyframes moveToTop {
+  from {
+  }
+  to {
+    -webkit-transform: translateY(-100%);
+  }
+} */
+@keyframes moveToTop {
+  from {
+  }
+  to {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+
+/* @-webkit-keyframes moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+  }
+} */
+@keyframes moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
 }

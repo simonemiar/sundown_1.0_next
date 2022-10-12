@@ -1,62 +1,44 @@
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
+    <>
+      <section className="h-full md:py-16 md:px-40 xl:px-80">
+        <div className="md:flex">
+          <div className="p-6 m-4 border border-red-600">
+            <h2 className="text-2xl tracking-wider uppercase">
+              start your order
+            </h2>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ipsa
+              voluptatibus suscipit accusantium
             </p>
-          </a>
+            <button className="w-full primary_button">ORDER</button>
+          </div>
+          <div className="col-start-4 col-end-7 p-6 m-4 border border-red-600">
+            <h2 className="text-2xl tracking-wider uppercase">
+              find your order
+            </h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ipsa
+              voluptatibus suscipit accusantium
+            </p>
+            <form className="flex my-4">
+              <input
+                type="text"
+                v-model="checkEmailInput"
+                className="w-full py-2 mr-1 bg-white border border-red-600"
+              />
+              <input
+                type="submit"
+                value="find"
+                className={styles.find_button}
+              />
+            </form>
+          </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+        <div className="col-start-1 col-end-7 row-start-2 m-4 border border-red-600 h-[300px]"></div>
+      </section>
+    </>
   );
 }
