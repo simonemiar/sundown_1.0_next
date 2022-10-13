@@ -46,10 +46,11 @@ export default function date() {
             <h2 className="headliner">Please enter your email</h2>
             <form>
               <input
-                v-model="email"
+                v-model={this.state.email}
                 type="email"
                 className="w-full p-2 border border-red-600"
                 placeholder="Enter your email"
+                onChange={this.onChange}
               />
             </form>
           </div>

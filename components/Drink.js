@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Drink = ({ drink }) => {
+  const [selectedDrink, setSelectedDrink] = useState(drink.isSelected);
   function toggleDrink() {
     // e.stopPropagation();
     console.log("testdrinks", drink);
-    if (drink.isSelected) {
-      drink.isSelected = false;
+    if (selectedDrink) {
+      setSelectedDrink((drink) => (drink = false));
       console.log("drink false", drink);
     } else {
-      drink.isSelected = true;
+      setSelectedDrink((drink) => (drink = true));
       console.log("drink true", drink);
     }
+
+    // if (drink.isSelected) {
+    //     drink.isSelected = false;
+    //     console.log("drink false", drink);
+    //   } else {
+    //     drink.isSelected = true;
+    //     console.log("drink true", drink);
+    //   }
   }
   return (
     <div
@@ -23,7 +32,7 @@ const Drink = ({ drink }) => {
         alt="check"
       /> */}
       <img
-        className={drink.isSelected ? "isSelected" : "isNotSelected"}
+        className={selectedDrink === true ? "isSelected" : "isNotSelected"}
         src="/images/check.svg"
         alt="check"
       />
