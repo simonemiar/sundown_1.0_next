@@ -1,26 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Dish from "../components/Dish";
+import { useRouter } from "next/router";
 
 export default function dishes({ dish }) {
-  console.log(dishes);
-  //const [dish, setDish] = useState(null);
+  const [data, setData] = useState(dish);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await fetch(
-  //       "https://www.themealdb.com/API/JSON/V1/1/RANDOM.PHP"
-  //     );
-  //     const dish = await response.json();
-  //     setDish(dish.meals[0]);
-  //     console.log(dish);
-  //   }
-  //   fetchData();
-  // }, []);
+  dish = data;
+  async function fetchData() {
+    const req = await fetch(
+      "https://www.themealdb.com/API/JSON/V1/1/RANDOM.PHP"
+    );
+    const newData = await req.json();
+    console.log(newData.meals[0]);
+    return setData(newData.meals[0]);
+  }
+  function handleClick() {
+    fetchData();
+  }
+  function nextPage() {
+    router.push(`/drinks`);
+  }
 
   return (
     <>
       <section className="w-full md:grid md:h-screen md:grid-cols-3 md:py-16 md:px-40 xl:px-80">
-        <div className="col-start-1 col-end-3 m-3 h-[500px] lg:h-[750px]">
+        <div className="col-start-1 col-end-3 m-3 h-[500px] lg:h-[650px]">
           <div className="w-full h-full p-6 overflow-auto border border-red-600">
             <Dish dish={dish} />
             <div className="flex my-2">
@@ -30,7 +35,9 @@ export default function dishes({ dish }) {
             <p className="mt-3 font-medium uppercase">Check out the receipe:</p>
             <p className="sm:columns-2">{dish.strInstructions}</p>
           </div>
-          <button className="w-full primary_button">generate new dish</button>
+          <button className="w-full primary_button" onClick={handleClick}>
+            generate new dish
+          </button>
         </div>
         <div className="w-full p-3 mt-20 mb-20 md:m-3 md:mt-0">
           <div className="p-6 border border-red-600">
@@ -39,7 +46,9 @@ export default function dishes({ dish }) {
             </h2>
             <p className="text-primary">Click on next to proceed</p>
           </div>
-          <button className="w-full primary_button">next</button>
+          <button className="w-full primary_button" onClick={nextPage}>
+            next
+          </button>
         </div>
       </section>
     </>

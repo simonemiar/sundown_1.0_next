@@ -27,7 +27,10 @@ a {
 }
 
 .isSelected {
-  @apply duration-200 ease-in-out opacity-100;
+  @apply absolute top-0 right-0 w-8 m-3 duration-200 ease-in-out opacity-100;
+}
+.isNotSelected {
+  @apply absolute top-0 right-0 w-8 m-3 opacity-0;
 }
 
 .hashtag {

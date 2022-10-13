@@ -1,6 +1,12 @@
 import styles from "../styles/Home.module.css";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
+  function startOrder() {
+    router.push(`/dishes`);
+  }
   return (
     <>
       <section className="h-full md:py-16 md:px-40 xl:px-80">
@@ -13,7 +19,9 @@ export default function Home() {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ipsa
               voluptatibus suscipit accusantium
             </p>
-            <button className="w-full primary_button">ORDER</button>
+            <button className="w-full primary_button" onClick={startOrder}>
+              ORDER
+            </button>
           </div>
           <div className="col-start-4 col-end-7 p-6 m-4 border border-red-600">
             <h2 className="text-2xl tracking-wider uppercase">

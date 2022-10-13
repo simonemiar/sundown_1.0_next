@@ -8,35 +8,35 @@ const Nav = () => {
           <li className="cursor-pointer hover:scale-110">
             <img
               className="w-10 m-2 md:w-12 md:h-12 md:m-auto md:my-6"
-              src="/images/lokation.svg"
+              src="/lokation.svg"
               alt="restauranter"
             />
           </li>
           <li className="cursor-pointer hover:scale-110">
             <img
               className="w-10 m-2 md:w-12 md:h-12 md:m-auto md:my-6"
-              src="/images/produkt.svg"
+              src="/produkt.svg"
               alt="produkter"
             />
           </li>
           <li className="cursor-pointer hover:scale-110">
             <img
               className="w-10 m-2 md:w-12 md:h-12 md:m-auto md:my-6"
-              src="/images/logo.svg"
+              src="/logo.svg"
               alt="logo"
             />
           </li>
           <li className="cursor-pointer hover:scale-110">
             <img
               className="w-10 m-2 md:w-12 md:h-12 md:m-auto md:my-6"
-              src="/images/nyhedsbrev.svg"
+              src="/nyhedsbrev.svg"
               alt="nyhedsbrev"
             />
           </li>
           <li className="cursor-pointer hover:scale-110">
             <img
               className="w-10 m-2 md:w-12 md:h-12 md:m-auto md:my-6"
-              src="/images/kontakt.svg"
+              src="/kontakt.svg"
               alt="kontakter"
             />
           </li>
