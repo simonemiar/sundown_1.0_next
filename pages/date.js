@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
+import { StoreContext } from "../components/Context";
 
 export default function date() {
+  const { order, setOrder } = useContext(StoreContext);
+
+  const [email, setEmail] = useState("");
   const [counter, setCounter] = useState(1);
   const router = useRouter();
 
@@ -22,6 +26,9 @@ export default function date() {
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   }
+
+  const emailInput = (e) => setEmail(e.target.value);
+  console.log(email);
 
   function nextPage() {
     router.push(`/receipt`);
@@ -46,11 +53,10 @@ export default function date() {
             <h2 className="headliner">Please enter your email</h2>
             <form>
               <input
-                v-model={this.state.email}
                 type="email"
                 className="w-full p-2 border border-red-600"
                 placeholder="Enter your email"
-                onChange={this.onChange}
+                onBlur={emailInput}
               />
             </form>
           </div>

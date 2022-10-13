@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Dish from "../components/Dish";
 import { useRouter } from "next/router";
+import { StoreContext } from "../components/Context";
 
 export default function dishes({ dish }) {
+  const { order, setOrder } = useContext(StoreContext);
   const [data, setData] = useState(dish);
   const router = useRouter();
 
@@ -12,7 +14,6 @@ export default function dishes({ dish }) {
       "https://www.themealdb.com/API/JSON/V1/1/RANDOM.PHP"
     );
     const newData = await req.json();
-    console.log(newData.meals[0]);
     return setData(newData.meals[0]);
   }
   function handleClick() {

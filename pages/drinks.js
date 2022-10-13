@@ -1,6 +1,7 @@
 import React from "react";
 import Drink from "../components/Drink";
-import { useRouter } from "next/router";
+import { useRouter, useContext } from "next/router";
+import { StoreContext } from "../components/Context";
 
 export default function drinks({ drinks }) {
   const router = useRouter();

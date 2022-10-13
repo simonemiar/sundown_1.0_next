@@ -1,7 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { StoreContext } from "../components/Context";
+import { useContext, useState } from "react";
 
 export default function date() {
+  const { order, setOrder } = useContext(StoreContext);
+
   const router = useRouter();
 
   function nextPage() {
