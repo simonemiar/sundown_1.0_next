@@ -1,31 +1,44 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Dish from "../components/Dish";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
 
 export default function dishes({ dish }) {
   const { order, setOrder } = useContext(StoreContext);
-  const [data, setData] = useState(dish);
+  const [receipe, setReceipe] = useState(dish);
   const router = useRouter();
+  let orderId = order.orderId;
 
-  dish = data;
+  useEffect(() => {
+    if (orderId == null) {
+      orderId = Math.random().toString(36).substr(2, 9);
+    }
+    console.log(orderId);
+  }, []);
+
+  dish = receipe;
   async function fetchData() {
     const req = await fetch(
       "https://www.themealdb.com/API/JSON/V1/1/RANDOM.PHP"
     );
     const newData = await req.json();
-    return setData(newData.meals[0]);
+    return setReceipe(newData.meals[0]);
   }
   function handleClick() {
     fetchData();
   }
   function nextPage() {
+    console.log("before", order.orderDish);
+    // setOrder((order.orderDish = dish));
+    setOrder({ ...order, orderDish: dish, orderId: orderId });
+
+    console.log("after", order.orderDish);
     router.push(`/drinks`);
   }
 
   return (
     <>
-      <section className="w-full md:grid md:h-screen md:grid-cols-3 md:py-16 md:px-40 xl:px-80">
+      <section className="w-full md:grid md:h-screen md:grid-cols-3 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="col-start-1 col-end-3 m-3 h-[500px] lg:h-[650px]">
           <div className="w-full h-full p-6 overflow-auto border border-red-600">
             <Dish dish={dish} />
@@ -58,8 +71,8 @@ export default function dishes({ dish }) {
 
 export const getStaticProps = async () => {
   const res = await fetch(`https://www.themealdb.com/API/JSON/V1/1/RANDOM.PHP`);
-  const data = await res.json();
-  const dish = data.meals[0];
+  const receipe = await res.json();
+  const dish = receipe.meals[0];
 
   return {
     props: { dish },

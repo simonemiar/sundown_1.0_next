@@ -13,7 +13,7 @@ export default function date() {
   }
   return (
     <>
-      <section className="w-full md:h-5/6 md:py-1 xl:px-80">
+      <section className="w-full md:h-5/6 md:py-1 md:px-28 lg:px-34 xl:px-80">
         <div className="w-full md:flex md:flex-row-reverse">
           <button
             className="h-10 col-span-2 uppercase primary_button"

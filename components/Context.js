@@ -2,11 +2,11 @@ import { createContext, useState } from "react";
 
 const defaultOrder = {
   orderId: null,
-  dish: {},
+  orderDish: {},
   drinks: [],
   selectedDrinks: [],
   date: new Date(),
-  people: 0,
+  people: 1,
   email: "",
   orderCompleted: false,
 };

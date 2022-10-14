@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 
-const Drink = ({ drink }) => {
-  const [selectedDrink, setSelectedDrink] = useState(drink.isSelected);
-
-  function toggleDrink() {
-    // e.stopPropagation();
-    console.log("testdrinks", drink);
-    if (selectedDrink) {
-      setSelectedDrink((drink) => (drink = false));
-      console.log("drink false", drink);
-    } else {
-      setSelectedDrink((drink) => (drink = true));
-      console.log("drink true", drink);
-    }
+function getClassName(isSelected) {
+  if (isSelected) {
+    return "isSelected";
+  } else {
+    return "isNotSelected";
   }
+}
+
+const Drink = ({ drink, onClick }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <div
       className="relative flex flex-col items-center w-full h-40 py-8 overflow-hidden>"
-      onClick={toggleDrink}
+      onClick={() => onClick(drink.id)}
     >
       <img
-        className={selectedDrink === true ? "isSelected" : "isNotSelected"}
+        className={getClassName(drink.isSelected)}
         src="/images/check.svg"
         alt="check"
       />

@@ -4,21 +4,23 @@ import { StoreContext } from "../components/Context";
 
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
+  const orders = [];
 
-  const [email, setEmail] = useState("");
-  const [counter, setCounter] = useState(1);
+  const [email, setEmail] = useState(order.email);
+  const [people, setPeople] = useState(order.people);
+  const [date, setDate] = useState(order.date);
   const router = useRouter();
 
   //increase counter
   const increase = () => {
-    setCounter((count) => count + 1);
+    setPeople((people) => people + 1);
   };
 
   //decrease counter
   const decrease = () => {
     // setCounter((count) => count - 1);
-    if (counter > 1) {
-      setCounter((count) => count - 1);
+    if (people > 1) {
+      setPeople((people) => people - 1);
     }
   };
 
@@ -28,14 +30,29 @@ export default function date() {
   }
 
   const emailInput = (e) => setEmail(e.target.value);
-  console.log(email);
+  //   console.log(email);
 
-  function nextPage() {
+  function finalizeOrder() {
+    setOrder({ ...order, email: email, people: people, orderCompleted: true });
+    if (orders === null) {
+      this.orders = [];
+    }
+    const findOrder = orders.find((order) => order.orderId === order.orderId);
+    console.log("find order", findOrder);
+    if (findOrder) {
+      orders.splice(orders.indexOf(findOrder), 1, order);
+    } else {
+      orders.push(order);
+    }
+    updateLocalStorage();
     router.push(`/receipt`);
+  }
+  function updateLocalStorage() {
+    localStorage.setItem("orders", JSON.stringify(orders));
   }
   return (
     <>
-      <section className="md:flex h-5/6 md:py-16 md:px-40 xl:px-80">
+      <section className="md:flex h-5/6 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="p-6 m-4 border border-red-600 md:w-full">
           <h2 className="headliner">Please choose date and time</h2>
           <div></div>
@@ -45,7 +62,7 @@ export default function date() {
             <h2 className="headliner">Please pick amount of people</h2>
             <div className="flex justify-center gap-3 text-7xl text-secondary">
               <button onClick={decrease}>-</button>
-              <p>{counter}</p>
+              <p>{people}</p>
               <button onClick={increase}>+</button>
             </div>
           </div>
@@ -62,7 +79,7 @@ export default function date() {
           </div>
           <button
             className="w-full h-full mb-32 uppercase secondary_button md:mb-0"
-            onClick={nextPage}
+            onClick={finalizeOrder}
           >
             order/update
           </button>

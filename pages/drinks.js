@@ -1,22 +1,42 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Drink from "../components/Drink";
-import { useRouter, useContext } from "next/router";
+import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
 
 export default function drinks({ drinks }) {
+  const { order, setOrder } = useContext(StoreContext);
+
+  const [selectedDrinks, setSelectedDrinks] = useState(drinks);
   const router = useRouter();
   console.log(drinks);
 
   function nextPage() {
-    router.push(`/date`);
+    const selectedDrinks = drinks.filter((drink) => drink.isSelected == true);
+    // const newSelectedDrinks = order.selectedDrinks
+
+    setOrder({ ...order, selectedDrinks: selectedDrinks });
+    if (selectedDrinks.length) {
+      router.push(`/date`);
+      console.log("amazing");
+    } else {
+      // this.error = 'Please pick min 1 drink'
+      //create error here
+      console.log("error");
+    }
+  }
+  function onDrinkClicked(id) {
+    const newDrinks = [...drinks];
+    const drink = newDrinks.find((drink) => drink.id === id);
+    drink.isSelected = !drink.isSelected;
+    setSelectedDrinks(newDrinks);
   }
   return (
     <>
-      <section className="w-full md:grid md:h-full md:grid-cols-3 md:py-16 md:px-40 xl:px-80">
+      <section className="w-full md:grid md:h-full md:grid-cols-3 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="col-start-1 col-end-3 m-3 border border-red-600">
           <div className="w-full sm:grid sm:grid-cols-3">
             {drinks.map((drink) => (
-              <Drink key={drink.id} drink={drink} />
+              <Drink key={drink.id} drink={drink} onClick={onDrinkClicked} />
             ))}
           </div>
         </div>
