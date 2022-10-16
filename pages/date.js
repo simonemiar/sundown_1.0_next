@@ -5,9 +5,10 @@ import { StoreContext } from "../components/Context";
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
 
-  const [email, setEmail] = useState(order.email);
+  const [email, setEmail] = useState(order.email || "");
   const [people, setPeople] = useState(order.people);
   const [date, setDate] = useState(order.date);
+  const [error, setError] = useState(null);
   const router = useRouter();
   let orders = [];
 
@@ -34,36 +35,45 @@ export default function date() {
       setPeople((people) => people - 1);
     }
   };
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
-  const emailInput = (e) => setEmail(e.target.value);
+  const emailInput = (event) => {
+    if (!isValidEmail(event.target.value)) {
+      setError("Email is invalid");
+    } else {
+      setError(null);
+    }
+
+    setEmail(event.target.value);
+  };
+
+  // const emailInput = (e) => setEmail(e.target.value);
 
   function finalizeOrder() {
     console.log(orders);
     setOrder({ ...order, email: email, people: people, orderCompleted: true });
 
-    const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-    // if (!reg.test(email)) {
-    //   this.error = "This is not a valid email";
-    //   console.log("email error");
-    // } else {
-    if (orders === null) {
-      orders = [];
-    }
-    const findOrder = orders.find((order) => order.orderId === order.orderId);
-    console.log("find order", findOrder);
-    if (findOrder) {
-      orders.splice(orders.indexOf(findOrder), 1, order);
-      console.log("splice");
+    if (error !== null) {
+      console.log("email error");
     } else {
-      orders.push(order);
-      console.log("new");
+      if (orders === null) {
+        orders = [];
+      }
+      const findOrder = orders.find((order) => order.orderId === order.orderId);
+      console.log("find order", findOrder);
+      if (findOrder) {
+        orders.splice(orders.indexOf(findOrder), 1, order);
+        console.log("splice");
+      } else {
+        orders.push(order);
+        console.log("new");
+      }
+      console.log("order arr", orders);
+      updateLocalStorage();
+      router.push(`/receipt`);
     }
-    console.log("order arr", orders);
-    updateLocalStorage();
-    router.push(`/receipt`);
-    //}
   }
   function updateLocalStorage() {
     localStorage.setItem("orders", JSON.stringify(orders));
@@ -87,6 +97,7 @@ export default function date() {
           <div className="h-full p-6 mb-4 border border-red-600">
             <h2 className="headliner">Please enter your email</h2>
             <form>
+              {error && <h2 style={{ color: "red" }}>{error}</h2>}
               <input
                 type="email"
                 className="w-full p-2 border border-red-600"
