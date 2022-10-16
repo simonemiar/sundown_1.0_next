@@ -55,9 +55,12 @@ export default function date() {
             <p className="mt-4 headliner">The ordered drinks</p>
             <div className="flex flex-wrap">
               <div className="flex flex-col items-center flex-1 p-2 mb-4 mr-4 bg-gray-100 rounded-md w-30 h-30">
-                <p className="text-center text-primary">
-                  {order.selectedDrinks}
-                </p>
+                {/* <p className="text-center text-primary">
+                {order.selectedDrinks.map((drink) => (
+              <Drink key={drink.id} drink={drink} onClick={onDrinkClicked} />
+            ))}
+                  {order.selectedDrinks.map(something something)}
+                </p> */}
               </div>
             </div>
           </div>

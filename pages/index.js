@@ -1,17 +1,50 @@
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
 export default function Home() {
   const { order, setOrder } = useContext(StoreContext);
+  const [orders, setOrders] = useState([]);
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.orders) {
+      setOrders(JSON.parse(localStorage.orders));
+    }
+  }, []);
 
   function startOrder() {
     router.push(`/dishes`);
   }
+
+  const handleChange = (event) => {
+    setInput(event.target.value);
+    console.log("value is:", event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setError("");
+    const orderFound = orders.find((element) => {
+      return element.email == input;
+    });
+
+    console.log(orderFound);
+    if (orderFound) {
+      console.log("order found");
+      // this.$store.commit("editOrder", { order: orderFound });
+      // router.push(`/dishes`);
+    } else {
+      console.log("no order under email");
+      setError("no order under this email required");
+    }
+    console.log("submit confirmed");
+  };
 
   return (
     <>
@@ -37,10 +70,13 @@ export default function Home() {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ipsa
               voluptatibus suscipit accusantium
             </p>
-            <form className="flex my-4">
+            {error && <h2 style={{ color: "red" }}>{error}</h2>}
+            <form onSubmit={handleSubmit} className="flex my-4">
               <input
                 type="text"
-                v-model="checkEmailInput"
+                onChange={handleChange}
+                value={input}
+                placeholder="enter your email"
                 className="w-full py-2 mr-1 bg-white border border-red-600"
               />
               <input
