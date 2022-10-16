@@ -2,26 +2,24 @@ import React, { useContext, useState } from "react";
 import Drink from "../components/Drink";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
+import { gsap } from "gsap";
 
 export default function drinks({ drinks }) {
   const { order, setOrder } = useContext(StoreContext);
-
   const [selectedDrinks, setSelectedDrinks] = useState(drinks);
+  const [error, setError] = useState("");
   const router = useRouter();
   console.log(drinks);
 
   function nextPage() {
     const selectedDrinks = drinks.filter((drink) => drink.isSelected == true);
     // const newSelectedDrinks = order.selectedDrinks
-
+    setError("");
     setOrder({ ...order, selectedDrinks: selectedDrinks });
     if (selectedDrinks.length) {
       router.push(`/date`);
-      console.log("amazing");
     } else {
-      // this.error = 'Please pick min 1 drink'
-      //create error here
-      console.log("error");
+      setError("Please pick min 1 drink");
     }
   }
   function onDrinkClicked(id) {
@@ -47,6 +45,7 @@ export default function drinks({ drinks }) {
               Ready to proceed <br />
               Click on next
             </p>
+            {error && <div className="text-sm text-red-500"> {error} </div>}
           </div>
           <button className="w-full primary_button" onClick={nextPage}>
             next

@@ -6,14 +6,13 @@ import { StoreContext } from "../components/Context";
 export default function dishes({ dish }) {
   const { order, setOrder } = useContext(StoreContext);
   const [receipe, setReceipe] = useState(dish);
+  const [newOrderId, setNewOrderId] = useState(order.orderId);
   const router = useRouter();
-  let orderId = order.orderId;
-
+  console.log(order.orderId);
   useEffect(() => {
-    if (orderId == null) {
-      orderId = Math.random().toString(36).substr(2, 9);
+    if (order.orderId == null) {
+      order.orderId = Math.random().toString(36).substr(2, 9);
     }
-    console.log(orderId);
   }, []);
 
   dish = receipe;
@@ -30,7 +29,7 @@ export default function dishes({ dish }) {
   function nextPage() {
     console.log("before", order.orderDish);
     // setOrder((order.orderDish = dish));
-    setOrder({ ...order, orderDish: dish, orderId: orderId });
+    setOrder({ ...order, orderDish: dish });
 
     console.log("after", order.orderDish);
     router.push(`/drinks`);

@@ -1,15 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
 
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
-  const orders = [];
 
   const [email, setEmail] = useState(order.email);
   const [people, setPeople] = useState(order.people);
   const [date, setDate] = useState(order.date);
   const router = useRouter();
+  let orders = [];
+
+  useEffect(() => {
+    if (localStorage.orders) {
+      let getOrders = localStorage.getItem("orders");
+      let parseOrder = JSON.parse(getOrders);
+
+      if (parseOrder !== undefined) {
+        orders = parseOrder;
+        console.log(orders);
+      }
+    }
+  }, []);
 
   //increase counter
   const increase = () => {
@@ -18,34 +30,40 @@ export default function date() {
 
   //decrease counter
   const decrease = () => {
-    // setCounter((count) => count - 1);
     if (people > 1) {
       setPeople((people) => people - 1);
     }
   };
 
-  function emailValidation() {
-    const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  }
-
   const emailInput = (e) => setEmail(e.target.value);
-  //   console.log(email);
 
   function finalizeOrder() {
+    console.log(orders);
     setOrder({ ...order, email: email, people: people, orderCompleted: true });
+
+    const regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    // if (!reg.test(email)) {
+    //   this.error = "This is not a valid email";
+    //   console.log("email error");
+    // } else {
     if (orders === null) {
-      this.orders = [];
+      orders = [];
     }
     const findOrder = orders.find((order) => order.orderId === order.orderId);
     console.log("find order", findOrder);
     if (findOrder) {
       orders.splice(orders.indexOf(findOrder), 1, order);
+      console.log("splice");
     } else {
       orders.push(order);
+      console.log("new");
     }
+    console.log("order arr", orders);
     updateLocalStorage();
     router.push(`/receipt`);
+    //}
   }
   function updateLocalStorage() {
     localStorage.setItem("orders", JSON.stringify(orders));
