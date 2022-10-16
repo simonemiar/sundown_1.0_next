@@ -8,11 +8,17 @@ export default function date() {
   const [email, setEmail] = useState(order.email || "");
   const [people, setPeople] = useState(order.people);
   const [date, setDate] = useState(order.date);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [button, setButton] = useState("finalize order");
   const router = useRouter();
   let orders = [];
 
   useEffect(() => {
+    if (order.orderCompleted) {
+      setButton("update order");
+    } else {
+      setButton("finalize order");
+    }
     if (localStorage.orders) {
       let getOrders = localStorage.getItem("orders");
       let parseOrder = JSON.parse(getOrders);
@@ -35,29 +41,23 @@ export default function date() {
       setPeople((people) => people - 1);
     }
   };
-  function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
-  }
 
-  const emailInput = (event) => {
-    if (!isValidEmail(event.target.value)) {
-      setError("Email is invalid");
-    } else {
-      setError(null);
-    }
-
-    setEmail(event.target.value);
+  const handleOnChange = (e) => {
+    setEmail(e.target.value);
   };
-
-  // const emailInput = (e) => setEmail(e.target.value);
 
   function finalizeOrder() {
     console.log(orders);
     setOrder({ ...order, email: email, people: people, orderCompleted: true });
+    const reg =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
 
-    if (error !== null) {
+    if (!reg.test(email)) {
       console.log("email error");
+      setError("Email is invalid");
     } else {
+      setError("");
+      console.log("email succes");
       if (orders === null) {
         orders = [];
       }
@@ -96,13 +96,14 @@ export default function date() {
           </div>
           <div className="h-full p-6 mb-4 border border-red-600">
             <h2 className="headliner">Please enter your email</h2>
+            {error && <h2 style={{ color: "red" }}>{error}</h2>}
             <form>
-              {error && <h2 style={{ color: "red" }}>{error}</h2>}
               <input
                 type="email"
                 className="w-full p-2 border border-red-600"
                 placeholder="Enter your email"
-                onBlur={emailInput}
+                value={email}
+                onChange={handleOnChange}
               />
             </form>
           </div>
@@ -110,7 +111,7 @@ export default function date() {
             className="w-full h-full mb-32 uppercase secondary_button md:mb-0"
             onClick={finalizeOrder}
           >
-            order/update
+            {button}
           </button>
         </div>
       </section>
