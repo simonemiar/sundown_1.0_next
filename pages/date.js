@@ -4,14 +4,13 @@ import { StoreContext } from "../components/Context";
 
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
-
+  let [orders, setOrders] = useState([]);
   const [email, setEmail] = useState(order.email || "");
   const [people, setPeople] = useState(order.people);
   const [date, setDate] = useState(order.date);
   const [error, setError] = useState("");
   const [button, setButton] = useState("finalize order");
   const router = useRouter();
-  let orders = [];
 
   useEffect(() => {
     if (order.orderCompleted) {
@@ -24,12 +23,12 @@ export default function date() {
       let parseOrder = JSON.parse(getOrders);
 
       if (parseOrder !== undefined) {
-        orders = parseOrder;
-        console.log(orders);
+        // orders = parseOrder;
+        console.log(parseOrder);
+        setOrders(parseOrder);
       }
     }
   }, []);
-
   //increase counter
   const increase = () => {
     setPeople((people) => people + 1);
@@ -61,12 +60,16 @@ export default function date() {
       if (orders === null) {
         orders = [];
       }
-      const findOrder = orders.find((order) => order.orderId === order.orderId);
+      console.log(orders);
+      const checkId = orders;
+
+      const findOrder = orders.find((o) => o.orderId === order.orderId);
       console.log("find order", findOrder);
       if (findOrder) {
         orders.splice(orders.indexOf(findOrder), 1, order);
         console.log("splice");
       } else {
+        setOrders((orders) => [...orders, order]);
         orders.push(order);
         console.log("new");
       }

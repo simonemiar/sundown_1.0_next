@@ -13,12 +13,18 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(order);
     if (localStorage.orders) {
       setOrders(JSON.parse(localStorage.orders));
     }
+    console.log(orders);
   }, []);
 
   function startOrder() {
+    // setOrder(...defaultOrder);
+    // const { current: useContext } = React.useRef({
+    //   ...defaultOrder,
+    // });
     router.push(`/dishes`);
   }
 
@@ -38,8 +44,7 @@ export default function Home() {
     if (orderFound) {
       console.log("order found");
       setOrder(orderFound);
-      // this.$store.commit("editOrder", { order: orderFound });
-      // router.push(`/dishes`);
+      router.push(`/dishes`);
     } else {
       console.log("no order under email");
       setError("no order under this email required");
@@ -78,7 +83,7 @@ export default function Home() {
                 onChange={handleChange}
                 value={input}
                 placeholder="enter your email"
-                className="w-full py-2 mr-1 bg-white border border-red-600"
+                className="w-full p-2 mr-1 bg-white border border-red-600"
               />
               <input
                 type="submit"
@@ -91,10 +96,10 @@ export default function Home() {
         <div className="col-start-1 col-end-7 row-start-2 m-4 border border-red-600 ">
           <Carousel infiniteLoop showStatus={false} autoPlay showThumbs={false}>
             <div>
-              <img src="/slider_image_1.webp" />
+              <img src="/slider_image_1.png" />
             </div>
             <div>
-              <img src="/slider_image_2.jpg" />
+              <img src="/slider_image_2.png" />
             </div>
             <div>
               <img src="/slider_image_3.jpg" />

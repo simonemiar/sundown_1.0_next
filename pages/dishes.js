@@ -5,13 +5,14 @@ import { StoreContext } from "../components/Context";
 
 export default function dishes({ dish }) {
   const { order, setOrder } = useContext(StoreContext);
-  const [receipe, setReceipe] = useState(dish);
+  const [receipe, setReceipe] = useState(order.dish || dish);
   const [newOrderId, setNewOrderId] = useState(order.orderId);
   const router = useRouter();
   console.log(order.orderId);
   useEffect(() => {
     if (order.orderId == null) {
-      order.orderId = Math.random().toString(36).substr(2, 9);
+      const newId = Math.random().toString(36).substr(2, 9);
+      setOrder({ ...order, orderId: newId });
     }
   }, []);
 
