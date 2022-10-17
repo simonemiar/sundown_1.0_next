@@ -23,9 +23,6 @@ export default function Home() {
 
   function startOrder() {
     setOrder(defaultOrder);
-    // const { current: useContext } = React.useRef({
-    //   ...defaultOrder,
-    // });
     router.push(`/dishes`);
   }
 
@@ -38,7 +35,7 @@ export default function Home() {
     event.preventDefault();
     setError("");
     const orderFound = orders.find((element) => {
-      return element.email == input;
+      return element.orderEmail == input;
     });
 
     console.log(orderFound);

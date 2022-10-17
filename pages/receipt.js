@@ -51,7 +51,7 @@ export default function date() {
           </div>
           <div className="flex flex-col w-2/3 p-12 border border-red-600">
             <p className="mt-2 headliner">dish</p>
-
+            {/* <Dish dish={order.dish} /> */}
             <p className="mt-4 headliner">The ordered drinks</p>
             <div className="flex flex-wrap">
               <div className="flex flex-col items-center flex-1 p-2 mb-4 mr-4 bg-gray-100 rounded-md w-30 h-30">

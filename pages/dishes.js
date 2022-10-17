@@ -5,7 +5,7 @@ import { StoreContext } from "../components/Context";
 
 export default function dishes({ dish }) {
   const { order, setOrder } = useContext(StoreContext);
-  const [receipe, setReceipe] = useState(order.dish || dish);
+  const [receipe, setReceipe] = useState(dish);
   const [newOrderId, setNewOrderId] = useState(order.orderId);
   const router = useRouter();
   console.log(order.orderId);
@@ -13,6 +13,10 @@ export default function dishes({ dish }) {
     if (order.orderId == null) {
       const newId = Math.random().toString(36).substr(2, 9);
       setOrder({ ...order, orderId: newId });
+    }
+    if (Object.keys(order.orderDish).length) {
+      setReceipe(order.orderDish);
+      console.log("old dish", order.orderDish);
     }
   }, []);
 
@@ -28,8 +32,6 @@ export default function dishes({ dish }) {
     fetchData();
   }
   function nextPage() {
-    console.log("before", order.orderDish);
-    // setOrder((order.orderDish = dish));
     setOrder({ ...order, orderDish: dish });
 
     console.log("after", order.orderDish);

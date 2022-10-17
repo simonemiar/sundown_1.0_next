@@ -5,9 +5,9 @@ import { StoreContext } from "../components/Context";
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
   let [orders, setOrders] = useState([]);
-  const [email, setEmail] = useState(order.email || "");
-  const [people, setPeople] = useState(order.people);
-  const [date, setDate] = useState(order.date);
+  const [email, setEmail] = useState(order.orderEmail);
+  const [people, setPeople] = useState(order.orderPeople);
+  const [date, setDate] = useState(order.orderDate);
   const [error, setError] = useState("");
   const [button, setButton] = useState("finalize order");
   const router = useRouter();
@@ -29,6 +29,7 @@ export default function date() {
       }
     }
   }, []);
+
   //increase counter
   const increase = () => {
     setPeople((people) => people + 1);
@@ -44,11 +45,26 @@ export default function date() {
   const handleOnChange = (e) => {
     setEmail(e.target.value);
   };
+  function setData() {
+    console.log(email);
+    console.log(people);
+
+    setOrder({
+      ...order,
+      orderEmail: email,
+      orderPeople: people,
+      orderCompleted: true,
+    });
+    console.log(order);
+  }
+
+  useEffect(() => {
+    console.log(order);
+    finalizeOrder();
+  }, [order]);
 
   function finalizeOrder() {
-    console.log(orders);
-    setOrder({ ...order, email: email, people: people, orderCompleted: true });
-
+    console.log(order);
     const reg =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
 
@@ -61,9 +77,6 @@ export default function date() {
       if (orders === null) {
         orders = [];
       }
-      console.log(orders);
-      const checkId = orders;
-
       const findOrder = orders.find((o) => o.orderId === order.orderId);
       console.log("find order", findOrder);
       if (findOrder) {
@@ -113,7 +126,7 @@ export default function date() {
           </div>
           <button
             className="w-full h-full mb-32 uppercase secondary_button md:mb-0"
-            onClick={finalizeOrder}
+            onClick={setData}
           >
             {button}
           </button>

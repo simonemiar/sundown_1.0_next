@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Drink from "../components/Drink";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
@@ -10,6 +10,22 @@ export default function drinks({ drinks }) {
   const [error, setError] = useState("");
   const router = useRouter();
   console.log(drinks);
+
+  useEffect(() => {
+    if (order.selectedDrinks.length) {
+      drinks.forEach((orginialDrink) => {
+        const foundDrink = order.selectedDrinks.find(
+          (selectedDrink) => selectedDrink.id === orginialDrink.id
+        );
+        console.log(foundDrink);
+        if (foundDrink) {
+          orginialDrink.isSelected = foundDrink.isSelected;
+          setSelectedDrinks(foundDrink);
+        }
+      });
+      console.log("append true");
+    }
+  }, []);
 
   function nextPage() {
     const selectedDrinks = drinks.filter((drink) => drink.isSelected == true);
