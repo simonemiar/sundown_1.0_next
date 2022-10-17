@@ -41,12 +41,12 @@ export default function date() {
             <div>
               <p className="text-xl font-bold uppercase">email:</p>
               <hr className="my-1 opacity-[0.5]" />
-              <p className="text-lg">{order.email}</p>
+              <p className="text-lg">{order.orderEmail}</p>
             </div>
             <div>
               <p className="text-xl font-bold uppercase">amount of people:</p>
               <hr className="my-1 opacity-[0.5]" />
-              <p className="text-lg">{order.people}</p>
+              <p className="text-lg">{order.orderPeople}</p>
             </div>
           </div>
           <div className="flex flex-col w-2/3 p-12 border border-red-600">

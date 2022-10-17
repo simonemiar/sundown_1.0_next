@@ -9,7 +9,6 @@ export default function drinks({ drinks }) {
   const [selectedDrinks, setSelectedDrinks] = useState(drinks);
   const [error, setError] = useState("");
   const router = useRouter();
-  console.log(drinks);
 
   useEffect(() => {
     if (order.selectedDrinks.length) {
@@ -17,7 +16,6 @@ export default function drinks({ drinks }) {
         const foundDrink = order.selectedDrinks.find(
           (selectedDrink) => selectedDrink.id === orginialDrink.id
         );
-        console.log(foundDrink);
         if (foundDrink) {
           orginialDrink.isSelected = foundDrink.isSelected;
           setSelectedDrinks(foundDrink);
