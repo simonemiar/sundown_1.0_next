@@ -37,6 +37,7 @@ export default function Home() {
     console.log(orderFound);
     if (orderFound) {
       console.log("order found");
+      setOrder(orderFound);
       // this.$store.commit("editOrder", { order: orderFound });
       // router.push(`/dishes`);
     } else {
