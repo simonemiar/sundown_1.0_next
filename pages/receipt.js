@@ -50,17 +50,21 @@ export default function date() {
             </div>
           </div>
           <div className="flex flex-col w-2/3 p-12 border border-red-600">
-            <p className="mt-2 headliner">dish</p>
-            {/* <Dish dish={order.dish} /> */}
+            <p className="mt-2 headliner">The ordered dish</p>
+            <Dish dish={order.orderDish} />
             <p className="mt-4 headliner">The ordered drinks</p>
             <div className="flex flex-wrap">
-              <div className="flex flex-col items-center flex-1 p-2 mb-4 mr-4 bg-gray-100 rounded-md w-30 h-30">
-                {/* <p className="text-center text-primary">
-                {order.selectedDrinks.map((drink) => (
-              <Drink key={drink.id} drink={drink} onClick={onDrinkClicked} />
-            ))}
-                  {order.selectedDrinks.map(something something)}
-                </p> */}
+              <div className="flex items-center flex-1 p-2 mb-4 mr-4 bg-gray-100 rounded-md w-30 h-30">
+                {order.selectedDrinks.map((d) => (
+                  <div key={d.id}>
+                    <img
+                      class="object-contain w-20 h-20"
+                      src={d.image_url}
+                      alt="name"
+                    />
+                    <p class="text-center text-primary">{d.name}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
