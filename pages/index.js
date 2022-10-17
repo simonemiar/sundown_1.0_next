@@ -4,6 +4,7 @@ import { StoreContext } from "../components/Context";
 import { useContext, useState, useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { defaultOrder } from "../components/Context";
 
 export default function Home() {
   const { order, setOrder } = useContext(StoreContext);
@@ -21,7 +22,7 @@ export default function Home() {
   }, []);
 
   function startOrder() {
-    // setOrder(...defaultOrder);
+    setOrder(defaultOrder);
     // const { current: useContext } = React.useRef({
     //   ...defaultOrder,
     // });

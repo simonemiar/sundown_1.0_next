@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const defaultOrder = {
+export const defaultOrder = {
   orderId: null,
   orderDish: {},
   drinks: [],
