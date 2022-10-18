@@ -4,4 +4,18 @@ const nextConfig = {
   swcMinify: true,
 };
 
-module.exports = nextConfig;
+const redirects = {
+  async redirects() {
+    return [
+      {
+        source: "/dishes/",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
+};
+
+// module.exports = nextConfig;
+
+module.exports = redirects;

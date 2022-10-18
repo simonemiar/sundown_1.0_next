@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Dish from "../components/Dish";
 
 export default function date() {
@@ -15,6 +15,12 @@ export default function date() {
   function formatDate(orderDate) {
     return new Date(orderDate).toLocaleString("en-GB");
   }
+  useEffect(() => {
+    if (!Object.keys(order.orderDish).length) {
+      router.push(`/`);
+      console.log("redirect");
+    }
+  }, []);
   return (
     <>
       <section className="w-full md:h-5/6 md:py-1 md:px-28 lg:px-34 xl:px-80">

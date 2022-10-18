@@ -38,6 +38,10 @@ export default function date() {
         setOrders(parseOrder);
       }
     }
+    if (!Object.keys(order.orderDish).length) {
+      router.push(`/`);
+      console.log("redirect");
+    }
   }, []);
 
   //increase counter

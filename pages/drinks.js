@@ -23,6 +23,10 @@ export default function drinks({ drinks }) {
       });
       console.log("append true");
     }
+    if (!Object.keys(order.orderDish).length) {
+      router.push(`/`);
+      console.log("redirect");
+    }
   }, []);
 
   function nextPage() {
@@ -64,7 +68,7 @@ export default function drinks({ drinks }) {
           <motion.ol variants={container} initial="hidden" animate="show">
             <div className="w-full sm:grid sm:grid-cols-3">
               {drinks.map((drink, i) => (
-                <motion.li variants={item}>
+                <motion.li variants={item} key={drink.id}>
                   <Drink
                     key={drink.id}
                     drink={drink}
