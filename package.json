@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.19.1.tgz",
+    "framer-motion": "^7.5.4",
     "gsap": "^3.11.3",
     "next": "12.3.1",
     "next-transpile-modules": "^9.1.0",

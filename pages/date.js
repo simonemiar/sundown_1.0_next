@@ -1,13 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
+import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+import { Datepicker, setOptions } from "@mobiscroll/react";
+
+setOptions({
+  theme: "ios",
+  themeVariant: "light",
+});
 
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
   let [orders, setOrders] = useState([]);
   const [email, setEmail] = useState(order.orderEmail);
   const [people, setPeople] = useState(order.orderPeople);
-  const [date, setDate] = useState(order.orderDate);
+  const [selectedDate, setDate] = useState(order.orderDate);
   const [error, setError] = useState("");
   const [button, setButton] = useState("finalize order");
 
@@ -56,6 +63,7 @@ export default function date() {
       ...order,
       orderEmail: email,
       orderPeople: people,
+      orderDate: selectedDate,
       orderCompleted: true,
     });
     console.log(order);
@@ -108,12 +116,41 @@ export default function date() {
   function updateLocalStorage() {
     localStorage.setItem("orders", JSON.stringify(orders));
   }
+  const onChange = React.useCallback((event) => {
+    setDate(event.value);
+  }, []);
   return (
     <>
       <section className="md:flex h-5/6 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="p-6 m-4 border border-red-600 md:w-full">
           <h2 className="headliner">Please choose date and time</h2>
-          <div></div>
+          <div>
+            <Datepicker
+              display="inline"
+              controls={["calendar", "time"]}
+              touchUi={true}
+              onChange={onChange}
+              value={selectedDate}
+              min={new Date()}
+              invalid={[
+                {
+                  recurring: {
+                    repeat: "weekly",
+                    weekDays: "SA,SU",
+                  },
+                },
+              ]}
+              valid={[
+                {
+                  start: "16:00",
+                  end: "22:59",
+                  recurring: {
+                    repeat: "daily",
+                  },
+                },
+              ]}
+            />
+          </div>
         </div>
         <div className="flex flex-col justify-between m-4 md:w-full">
           <div className="h-full p-6 mb-4 border border-primary">

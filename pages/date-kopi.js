@@ -5,7 +5,7 @@ import { StoreContext } from "../components/Context";
 export default function date() {
   const { order, setOrder } = useContext(StoreContext);
   const [orders, setOrders] = useState([]);
-  const [email, setEmail] = useState("test");
+  const [email, setEmail] = useState(order.orderEmail);
   const [people, setPeople] = useState(order.orderPeople);
   const [date, setDate] = useState(order.orderDate);
   const [error, setError] = useState("");
@@ -83,13 +83,15 @@ export default function date() {
     //   orders.splice(orders.indexOf(findOrder), 1, order);
     //   console.log("spliced", orders);
     // } else {
-    console.log("new", order);
-    setOrders([...orders, order]);
+    if (email) {
+      console.log("new", order);
+      setOrders([...orders, order]);
+    }
     // }
   }, [order]);
 
   useEffect(() => {
-    if (orders.length) {
+    if (orders.length && email) {
       console.log("orders array has been updated", orders);
       updateLocalStorage();
     }
@@ -171,8 +173,8 @@ export default function date() {
     <>
       <section className="md:flex h-5/6 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="p-6 m-4 border border-red-600 md:w-full">
-          <pre>{email}</pre>
-          <pre>{JSON.stringify(orders, null, 2)}</pre>
+          {/* <pre>{email}</pre>
+          <pre>{JSON.stringify(orders, null, 2)}</pre> */}
           <h2 className="headliner">Please choose date and time</h2>
           <div></div>
         </div>

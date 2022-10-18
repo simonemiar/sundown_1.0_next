@@ -8,9 +8,12 @@ export default function date() {
   const { order, setOrder } = useContext(StoreContext);
 
   const router = useRouter();
-
+  console.log(order.orderDate);
   function nextPage() {
     router.push(`/`);
+  }
+  function formatDate(orderDate) {
+    return new Date(orderDate).toLocaleString("en-GB");
   }
   return (
     <>
@@ -36,7 +39,7 @@ export default function date() {
             <div>
               <p className="text-xl font-bold uppercase">order date:</p>
               <hr className="my-1 opacity-[0.5]" />
-              <p className="text-lg">order date</p>
+              <p className="text-lg">{formatDate(order.orderDate)}</p>
             </div>
             <div>
               <p className="text-xl font-bold uppercase">email:</p>
@@ -51,18 +54,21 @@ export default function date() {
           </div>
           <div className="flex flex-col w-2/3 p-12 border border-red-600">
             <p className="mt-2 headliner">The ordered dish</p>
-            <Dish dish={order.orderDish} />
+            <Dish dish={order.orderDish} class="p-5 bg-gray-100 rounded-md" />
             <p className="mt-4 headliner">The ordered drinks</p>
             <div className="flex flex-wrap">
-              <div className="flex items-center flex-1 p-2 mb-4 mr-4 bg-gray-100 rounded-md w-30 h-30">
+              <div className="flex items-center flex-1 p-2 mb-4 ">
                 {order.selectedDrinks.map((d) => (
-                  <div key={d.id}>
+                  <div
+                    key={d.id}
+                    className="flex-1 p-4 mr-1 bg-gray-100 rounded-md w-30 h-30"
+                  >
                     <img
-                      class="object-contain w-20 h-20"
+                      className="object-contain w-20 h-20 m-auto"
                       src={d.image_url}
                       alt="name"
                     />
-                    <p class="text-center text-primary">{d.name}</p>
+                    <p className="text-center text-primary">{d.name}</p>
                   </div>
                 ))}
               </div>

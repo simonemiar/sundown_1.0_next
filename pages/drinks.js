@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Drink from "../components/Drink";
 import { useRouter } from "next/router";
 import { StoreContext } from "../components/Context";
-import { gsap } from "gsap";
+import { motion } from "framer-motion";
 
 export default function drinks({ drinks }) {
   const { order, setOrder } = useContext(StoreContext);
@@ -42,15 +42,38 @@ export default function drinks({ drinks }) {
     drink.isSelected = !drink.isSelected;
     setSelectedDrinks(newDrinks);
   }
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.04,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
   return (
     <>
       <section className="w-full md:grid md:h-full md:grid-cols-3 md:py-16 md:px-28 lg:px-34 xl:px-80">
         <div className="col-start-1 col-end-3 m-3 border border-red-600">
-          <div className="w-full sm:grid sm:grid-cols-3">
-            {drinks.map((drink) => (
-              <Drink key={drink.id} drink={drink} onClick={onDrinkClicked} />
-            ))}
-          </div>
+          <motion.ol variants={container} initial="hidden" animate="show">
+            <div className="w-full sm:grid sm:grid-cols-3">
+              {drinks.map((drink, i) => (
+                <motion.li variants={item}>
+                  <Drink
+                    key={drink.id}
+                    drink={drink}
+                    onClick={onDrinkClicked}
+                  />
+                </motion.li>
+              ))}
+            </div>
+          </motion.ol>
         </div>
         <div className="col-start-3 col-end-4 m-3 mb-20 md:mb-3">
           <div className="p-6 border border-red-600">
